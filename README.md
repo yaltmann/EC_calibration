@@ -34,10 +34,11 @@ docker build -t [image-tag] .
 ```
 docker run -it --mount type=bind,source="$(pwd)"/data,target=/home/docker/data [image-tag]
 ```
+Steps 3 and 4 have been include in the 'docker_launch.sh' file. This is to speed up the build and run process if modifications are needed.
 
 ## Using the container
 
-Once the container is opening the following command must be run
+Once the container is opening the following command must be run:
 ```
 source /home/docker/dev/env.sh
 ```
