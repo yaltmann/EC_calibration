@@ -166,4 +166,5 @@ fabric.properties
 *.bag
 *.png
 *.h5
+*.mat
 
