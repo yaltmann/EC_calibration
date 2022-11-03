@@ -1,4 +1,19 @@
 # e2calib_docker
+This repository contains the required files to create a docker container for the e2calib pipeline detailed in [How to Calibrate Your Event Camera](http://rpg.ifi.uzh.ch/docs/CVPRW21_Muglikar.pdf). All depenedencies are handled with the Dockerfile, as such the pipeline is ready to run out of the box with very little configuration needed. 
+
+Please remember to site the original source of this work: 
+
+[Manasi Muglikar](https://manasi94.github.io/), [Mathias Gehrig](https://magehrig.github.io/), [Daniel Gehrig](https://danielgehrig18.github.io/), [Davide Scaramuzza](http://rpg.ifi.uzh.ch/people_scaramuzza.html), "How to Calibrate Your Event Camera", Computer Vision and Pattern Recognition Workshops (CVPRW), 2021
+
+```bibtex
+@InProceedings{Muglikar2021CVPR,
+  author = {Manasi Muglikar and Mathias Gehrig and Daniel Gehrig and Davide Scaramuzza},
+  title = {How to Calibrate Your Event Camera},
+  booktitle = {{IEEE} Conf. Comput. Vis. Pattern Recog. Workshops (CVPRW)},
+  month = {June},
+  year = {2021}
+}
+```
 
 ## Requirements
 
@@ -16,7 +31,9 @@ docker build -t [image-tag] .
 ```
 
 3. Launch the docker container using the docker_launch.sh file
-
+```
+./docker_launch.sh
+```
 
 ## Using the container
 
