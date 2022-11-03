@@ -31,4 +31,6 @@ To convert a rosbag to a h5 file the following command can be run from the top d
 ```
 
 To extract the calibration images from the h5 file the following command can be run for the top directory:
+```
 python3 dev/tools/e2calib/python/offline_reconstruction.py --h5file data/<h5file> - -freq_hz 10 --output_folder data/<location> --height 360 --width 480
+```
