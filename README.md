@@ -20,6 +20,9 @@ Please remember to site the original source of this work:
 The following packahes are required in order to run the docker container:
 * [Docker Engine](https://docs.docker.com/engine/install/ubuntu/)
 
+For GPU support:
+* [NVIDIA Container Toolkit](https://github.com/NVIDIA/nvidia-docker)
+
 ## Getting Started
 This repository has been created and tested using Ubuntu 18.04, ROS Melodic, Docker Version 20.10.17.
 
@@ -34,19 +37,19 @@ docker build -t [image-tag] .
 ```
 docker run -it --mount type=bind,source="$(pwd)"/data,target=/home/docker/data [image-tag]
 ```
-Steps 3 and 4 have been include in the 'docker_launch.sh' file. This is to speed up the build and run process if modifications are needed.
+Steps 3 and 4 have been include in the 'docker_launch.sh' file. This is to speed up the build and run process.
 
 NOTE: The basic image takes a significant amount of time to build. An alternative image is provided that offers several benefits but also some drawbacks.
 The dokcer_launch_gpu.sh script will launch an alternative version of the container built upon the pytorch image. This image offers GPU support but cannot convert files from raw. Files created are also initially given root permissions but this can currently be fixed by running the rrperms.sh script with the user name as input.
 
 ## Using the "basic" container
 
-Once the container is opening the following command must be run:
+Once the container is opened the following command must be run:
 ```
 source /home/docker/dev/env.sh
 ```
 
-To convert a rosbag to a h5 file the following command can be run from the top directory. We suggest placing all data into the data folder provided in the repository:
+To convert a rosbag to a h5 file the following command can be run from the top directory. Data must be placed into the data folder provided in the repository otherwise it will not be mounted to the container:
 ```
  python3 /home/docker/dev/bundles/e2calib/scripts/convert/convert.py data/[bagfile] --topic /prophesee/camera/cd_events_buffer
 ```
@@ -60,10 +63,12 @@ python3 dev/tools/e2calib/python/offline_reconstruction.py --h5file data/[h5file
 
 Unlike the basic container we do not need to source an environment and can instead run the necessary files straight away.
 
-To convert a rosbag to a h5 file the following command can be run from the top directory. We suggest placing all data into the data folder provided in the repository:
+To convert a rosbag to a h5 file the following command can be run from the top directory. Data must be placed into the data folder provided in the repository otherwise it will not be mounted to the container:
 ```
  python /e2calib/python/convert.py data/[bagfile] --topic /prophesee/camera/cd_events_buffer
 ```
+If not converting from a rosbag the --topic arugment can be ommited. 
+
 To extract the calibration images from the h5 file the following command can be run for the top directory:
 ```
 python e2calib/python/offline_reconstruction.py --h5file data/[h5file] --freq_hz 10 --output_folder data/<location> --height [heigh] --width [width] --use_gpu
