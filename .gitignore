@@ -164,6 +164,8 @@ fabric.properties
 *.vsix
 
 *.bag
+*.raw
+*.dat
 *.png
 *.h5
 *.mat
