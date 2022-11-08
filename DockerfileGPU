@@ -1,0 +1,27 @@
+FROM pytorch/pytorch
+
+RUN apt-get update && \
+    apt-get upgrade -y
+
+RUN apt-get install ffmpeg libsm6 libxext6  -y
+
+RUN conda install -y -c conda-forge h5py opencv tqdm
+RUN conda install -y scipy
+
+RUN apt install -y git
+
+RUN git clone https://github.com/uzh-rpg/e2calib.git
+
+RUN pip3 install --no-cache-dir -r e2calib/requirements.txt
+RUN pip3 install --extra-index-url https://rospypi.github.io/simple/ rospy rosbag
+RUN pip install e2calib/python/
+
+RUN DEBIAN_FRONTEND=noninteractive TZ=Etc/UTC apt-get -y install tzdata
+
+COPY install/metavision.list /etc/apt/sources.list.d
+RUN apt update
+RUN apt -y install metavision-sdk
+
+SHELL ["/bin/bash", "-c"]
+#THIS VERSION CANNOT CONVERT RAW
+

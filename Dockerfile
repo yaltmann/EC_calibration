@@ -5,6 +5,7 @@ MAINTAINER "Javier Hidalgo-Carrio" <https://jhidalgocarrio.github.io>
 RUN apt-get update && \
     apt-get upgrade -y
 
+
 RUN apt install -y --no-install-recommends \
     sudo zsh vim build-essential cmake git pkg-config libgtk-3-dev \
     libavcodec-dev libavformat-dev libswscale-dev libv4l-dev \
@@ -16,6 +17,9 @@ RUN apt-get install -y ruby ruby-dev
 
 RUN apt-get install -y libboost-all-dev
 
+COPY install/metavision.list /etc/apt/sources.list.d
+RUN apt update
+RUN apt -y install metavision-sdk
 
 # Create docker user
 RUN adduser  --disabled-password --gecos -m docker && adduser docker sudo && echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
