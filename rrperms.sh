@@ -1,1 +1,1 @@
-chown $1 data/
+sudo chown $1 -R data/
