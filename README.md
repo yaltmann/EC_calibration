@@ -39,10 +39,18 @@ docker run -it --mount type=bind,source="$(pwd)"/data,target=/home/docker/data [
 ```
 Steps 3 and 4 have been include in the 'docker_launch.sh' file. This is to speed up the build and run process.
 
-NOTE: The basic image takes a significant amount of time to build. An alternative image is provided that offers several benefits but also some drawbacks.
-The dokcer_launch_gpu.sh script will launch an alternative version of the container built upon the pytorch image. This image offers GPU support but cannot convert files from raw. Files created are also initially given root permissions but this can currently be fixed by running the rrperms.sh script with the user name as input.
+## Alternative Image (With GPU Support)
 
-## Using the "basic" container
+The basic image takes a significant amount of time to build. 
+An alternative image is provided that offers several benefits but also some drawbacks. This can be run using the following script:
+```
+./docker_launch_gpu.sh
+```
+The `docker_launch_gpu.sh` script will launch an alternative version of the container built upon the pytorch image. This image offers GPU support but cannot convert files from raw. 
+
+Files created are also initially given root permissions but this can currently be fixed by running the `rrperms.sh` script with the user name as input.
+
+## Using the "Basic" Container
 
 Once the container is opened the following command must be run:
 ```
@@ -59,7 +67,7 @@ To extract the calibration images from the h5 file the following command can be 
 python3 dev/tools/e2calib/python/offline_reconstruction.py --h5file data/[h5file] --freq_hz 10 --output_folder data/<location> --height [heigh] --width [width] 
 ```
 
-## Using the GPU container
+## Using the GPU Container
 
 Unlike the basic container we do not need to source an environment and can instead run the necessary files straight away.
 
@@ -73,4 +81,4 @@ To extract the calibration images from the h5 file the following command can be 
 ```
 python e2calib/python/offline_reconstruction.py --h5file data/[h5file] --freq_hz 10 --output_folder data/<location> --height [heigh] --width [width] --use_gpu
 ```
-Note: Unlike the basic container we require the --use_gpu argument to be passed otherwise it will run on the CPU.
+Note: Unlike the basic container we require the `--use_gpu` argument to be passed otherwise it will run on the CPU.
