@@ -36,7 +36,10 @@ docker run -it --mount type=bind,source="$(pwd)"/data,target=/home/docker/data [
 ```
 Steps 3 and 4 have been include in the 'docker_launch.sh' file. This is to speed up the build and run process if modifications are needed.
 
-## Using the container
+NOTE: The basic image takes a significant amount of time to build. An alternative image is provided that offers several benefits but also some drawbacks.
+The dokcer_launch_gpu.sh script will launch an alternative version of the container built upon the pytorch image. This image offers GPU support but cannot convert files from raw. Files created are also initially given root permissions but this can currently be fixed by running the rrperms.sh script with the user name as input.
+
+## Using the "basic" container
 
 Once the container is opening the following command must be run:
 ```
@@ -50,5 +53,19 @@ To convert a rosbag to a h5 file the following command can be run from the top d
 
 To extract the calibration images from the h5 file the following command can be run for the top directory:
 ```
-python3 dev/tools/e2calib/python/offline_reconstruction.py --h5file data/[h5file] --freq_hz 10 --output_folder data/<location> --height 360 --width 480
+python3 dev/tools/e2calib/python/offline_reconstruction.py --h5file data/[h5file] --freq_hz 10 --output_folder data/<location> --height [heigh] --width [width] 
 ```
+
+## Using the GPU container
+
+Unlike the basic container we do not need to source an environment and can instead run the necessary files straight away.
+
+To convert a rosbag to a h5 file the following command can be run from the top directory. We suggest placing all data into the data folder provided in the repository:
+```
+ python /e2calib/python/convert.py data/[bagfile] --topic /prophesee/camera/cd_events_buffer
+```
+To extract the calibration images from the h5 file the following command can be run for the top directory:
+```
+python e2calib/python/offline_reconstruction.py --h5file data/[h5file] --freq_hz 10 --output_folder data/<location> --height [heigh] --width [width] --use_gpu
+```
+Note: Unlike the basic container we require the --use_gpu argument to be passed otherwise it will run on the CPU.
